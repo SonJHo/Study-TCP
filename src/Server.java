@@ -28,6 +28,5 @@ public class Server {
             new Thread(new ClientHandler(socket)).start();
         }
 
-
     }
 }

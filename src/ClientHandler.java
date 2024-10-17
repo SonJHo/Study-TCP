@@ -20,6 +20,7 @@ public class ClientHandler implements Runnable {
             Server.clientHandlers.add(this);
 
             userName = br.readLine();
+            System.out.println("**" + userName + " is join **");
             String line;
 
             while ((line = br.readLine()) != null) {
