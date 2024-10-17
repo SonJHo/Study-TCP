@@ -3,7 +3,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Client {
+public class Client2 {
     public static void main(String[] args) throws IOException {
         Socket socket = null;
         BufferedReader br = null;
