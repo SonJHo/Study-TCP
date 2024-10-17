@@ -9,7 +9,7 @@ public class Client {
         BufferedReader br = null;
         BufferedReader br_input ;
         PrintWriter pw = null;
-        final String address = "192.168.45.69";
+        final String address = "address";
         String userName;
         try {
             socket = new Socket(address, 8080);

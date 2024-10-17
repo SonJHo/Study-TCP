@@ -12,7 +12,7 @@ public class Server {
         ServerSocket serverSocket = null;
 
         final int PORT = 8080;
-        final String IP = "192.168.45.69";
+        final String IP = "address";
         try {
             serverSocket = new ServerSocket(PORT);
             System.out.println("server open..");
