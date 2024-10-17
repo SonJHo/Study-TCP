@@ -20,8 +20,7 @@ class MessageReceiver implements Runnable{
                 }
             }
         } catch (IOException e) {
-            System.out.println("error");
-        } ;
+        }
 
     }
 }

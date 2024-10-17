@@ -7,23 +7,18 @@ public class Client {
     public static void main(String[] args) throws IOException {
         Socket socket = null;
         BufferedReader br = null;
-        BufferedReader br_input = null;
+        BufferedReader br_input ;
         PrintWriter pw = null;
-        InetAddress ia = null;
-
         final String address = "192.168.45.69";
-        String NickName = "Junho";
-
+        String userName;
         try {
-
-            ia = InetAddress.getByName("192.168.45.69");
             socket = new Socket(address, 8080);
-            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            //br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
             br_input = new BufferedReader(new InputStreamReader(System.in));
 
             System.out.print("NickName:");
-            String userName = br_input.readLine();
+            userName = br_input.readLine();
             pw.println(userName);
 
         } catch (UnknownHostException e) {
@@ -43,7 +38,6 @@ public class Client {
                 break;
             }
         }
-
         socket.close();
     }
 

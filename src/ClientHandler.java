@@ -8,6 +8,7 @@ public class ClientHandler implements Runnable {
     private String userName;
 
     PrintWriter pw;
+
     public ClientHandler(Socket socket) {
         this.socket = socket;
     }
@@ -24,19 +25,19 @@ public class ClientHandler implements Runnable {
             String line;
 
             while ((line = br.readLine()) != null) {
-                System.out.println("[" + LocalTime.now() + "]" + userName  + ":"  + line);
+                System.out.println("[" + LocalTime.now() + "]" + userName + ":" + line);
                 broadcastMessage(line);
                 if (line.equals("exit")) {
                     break;
                 }
             }
         } catch (IOException e) {
-            System.out.println("통신중 error");
         } finally {
+            Server.clientHandlers.remove(this);
+            System.out.println("**" + userName + " is quit **");
             try {
                 socket.close();
             } catch (IOException e) {
-
                 System.out.println("종료중 error");
             }
         }
@@ -44,7 +45,7 @@ public class ClientHandler implements Runnable {
 
     private void broadcastMessage(String line) {
         for (ClientHandler clientHandler : Server.clientHandlers) {
-            clientHandler.pw.println("[" + LocalTime.now() + "]" + userName  + ":"  + line);
+            clientHandler.pw.println("[" + LocalTime.now() + "]" + userName + ":" + line);
         }
     }
 }

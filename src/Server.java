@@ -2,13 +2,12 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Server {
 
-    public static List<ClientHandler> clientHandlers = Collections.synchronizedList(new ArrayList<>());
+    public static Set<ClientHandler> clientHandlers = Collections.synchronizedSet(new HashSet<>());
+
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
 
@@ -23,10 +22,11 @@ public class Server {
         }
 
 
-        while( true){
+        while (true) {
             Socket socket = serverSocket.accept(); // 서버생성, client  접속 대기
             new Thread(new ClientHandler(socket)).start();
         }
+
 
     }
 }
