@@ -2,6 +2,8 @@ import java.io.*;
 import java.net.Socket;
 import java.time.LocalTime;
 
+import static utils.MyUtils.log;
+
 public class ClientHandler implements Runnable {
     private Socket socket;
 
@@ -21,11 +23,11 @@ public class ClientHandler implements Runnable {
             Server.clientHandlers.add(this);
 
             userName = br.readLine();
-            System.out.println("**" + userName + " is join **");
+            System.out.println(log("** " + userName + " is join **"));
             String line;
 
             while ((line = br.readLine()) != null) {
-                System.out.println("[" + LocalTime.now() + "]" + userName + ":" + line);
+                System.out.println(log(userName + ":" + line));
                 broadcastMessage(line);
                 if (line.equals("exit")) {
                     break;
@@ -34,18 +36,18 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
         } finally {
             Server.clientHandlers.remove(this);
-            System.out.println("**" + userName + " is quit **");
+            System.out.println(log("** " + userName + " is quit **"));
             try {
                 socket.close();
             } catch (IOException e) {
-                System.out.println("종료중 error");
+                System.out.println(log("close error!!"));
             }
         }
     }
 
     private void broadcastMessage(String line) {
         for (ClientHandler clientHandler : Server.clientHandlers) {
-            clientHandler.pw.println("[" + LocalTime.now() + "]" + userName + ":" + line);
+            clientHandler.pw.println(userName + ":" + line);
         }
     }
 }

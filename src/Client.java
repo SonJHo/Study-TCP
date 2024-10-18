@@ -9,7 +9,7 @@ public class Client {
         BufferedReader br = null;
         BufferedReader br_input ;
         PrintWriter pw = null;
-        final String address = "address";
+        final String address = "192.168.45.69";
         String userName;
         try {
             socket = new Socket(address, 8080);
@@ -30,8 +30,8 @@ public class Client {
 
         new Thread(new MessageReceiver(socket)).start();
 
+        System.out.println("send message:");
         while(true){
-            System.out.println("send message:");
             String msg = br_input.readLine();
             pw.println(msg);
             if(msg.equals("quit") ){

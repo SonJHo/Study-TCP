@@ -3,6 +3,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
+import static utils.MyUtils.*;
 
 public class Server {
 
@@ -15,10 +16,10 @@ public class Server {
         final String IP = "address";
         try {
             serverSocket = new ServerSocket(PORT);
-            System.out.println("server open..");
-            System.out.println("==============================");
+            System.out.println(log("server open..."));
+            System.out.println("===================================");
         } catch (IOException e) {
-            System.out.println("포트 설정중 오류 발생");
+            System.out.println(log("server open error!!"));
         }
 
 
