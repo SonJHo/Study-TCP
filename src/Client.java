@@ -38,6 +38,7 @@ public class Client {
                 break;
             }
         }
+        System.out.println("종료");
         socket.close();
     }
 
