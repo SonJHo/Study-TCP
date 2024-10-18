@@ -4,7 +4,7 @@ import java.net.UnknownHostException;
 
 public class Client {
     public static void main(String[] args) throws IOException {
-        final String address = "192.168.45.69";
+        final String address = "192.168.55.174";
         Socket socket;
         BufferedReader br;
         BufferedReader br_input;
