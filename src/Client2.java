@@ -2,7 +2,7 @@ import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Client {
+public class Client2 {
     public static void main(String[] args) throws IOException {
         final String address = "192.168.45.69";
         Socket socket;

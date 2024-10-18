@@ -1,5 +1,6 @@
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -14,10 +15,10 @@ public class Server {
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
 
-        final int PORT = 8080;
-        final String IP = "address";
+        final int PORT = 8888;
         try {
-            serverSocket = new ServerSocket(PORT);
+
+            serverSocket =  new ServerSocket(PORT, 50, InetAddress.getByName("0.0.0.0"));
             System.out.println(log("server open..."));
             System.out.println("===================================\n");
         } catch (IOException e) {
@@ -33,6 +34,7 @@ public class Server {
                 Socket socket = null; // 서버생성, client  접속 대기
                 if (serverSocket != null) {
                     socket = serverSocket.accept();
+                    System.out.println("연결댬");
                 }
                 new Thread(new ClientHandler(socket)).start();
             }catch (SocketException e){

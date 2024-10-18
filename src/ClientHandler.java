@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import static utils.MyUtils.log;
 
 public class ClientHandler implements Runnable {
-    private Socket socket;
+    private final Socket socket;
 
     private String userName;
 
