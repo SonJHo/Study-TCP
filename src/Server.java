@@ -10,7 +10,7 @@ import static utils.MyUtils.*;
 public class Server {
 
     public static Set<ClientHandler> clientHandlers = Collections.synchronizedSet(new HashSet<>());
-
+    public static volatile boolean running = true;
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
 
@@ -28,7 +28,7 @@ public class Server {
         Thread thread = new Thread(new ServerCommandTask(serverSocket));
         thread.start();
 
-        while (thread.isAlive()) {
+        while (running) {
             try {
                 Socket socket = null; // 서버생성, client  접속 대기
                 if (serverSocket != null) {
@@ -37,6 +37,7 @@ public class Server {
                 new Thread(new ClientHandler(socket)).start();
             }catch (SocketException e){
                 System.out.println(log(e.getMessage()));
+                break;
             }
         }
 
@@ -65,6 +66,7 @@ class ServerCommandTask implements Runnable {
                 String command = br.readLine();
                 if (command.equals("shutdown")) {
                     System.out.println(log("server shutdown"));
+                    Server.running = false;
                     serverSocket.close();
                     break;
                 }
