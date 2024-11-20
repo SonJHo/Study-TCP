@@ -34,7 +34,6 @@ public class Server {
                 Socket socket = null; // 서버생성, client  접속 대기
                 if (serverSocket != null) {
                     socket = serverSocket.accept();
-                    System.out.println("연결댬");
                 }
                 new Thread(new ClientHandler(socket)).start();
             }catch (SocketException e){

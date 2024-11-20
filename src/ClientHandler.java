@@ -1,6 +1,5 @@
 import java.io.*;
 import java.net.Socket;
-import java.time.LocalTime;
 
 import static utils.MyUtils.log;
 
@@ -24,6 +23,7 @@ public class ClientHandler implements Runnable {
 
             userName = br.readLine();
             System.out.println(log("** " + userName + " is join **"));
+            broadcastMessage(userName + "님이 입장 하셨습니다.");
             String line;
 
             while ((line = br.readLine()) != null) {
@@ -37,6 +37,8 @@ public class ClientHandler implements Runnable {
         } finally {
             Server.clientHandlers.remove(this);
             System.out.println(log("** " + userName + " is quit **"));
+            broadcastMessage(userName + "님이 퇴장 하셨습니다.");
+
             try {
                 socket.close();
             } catch (IOException e) {

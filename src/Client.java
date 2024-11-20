@@ -4,7 +4,7 @@ import java.net.UnknownHostException;
 
 public class Client {
     public static void main(String[] args) throws IOException {
-        final String address = "192.168.55.174";
+        final String address = "192.168.45.69";
         Socket socket;
         BufferedReader br;
         BufferedReader br_input;
@@ -13,7 +13,6 @@ public class Client {
         try {
             socket = new Socket(address, 8888);
 
-            //br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
             br_input = new BufferedReader(new InputStreamReader(System.in));
 
@@ -39,7 +38,7 @@ public class Client {
                 break;
             }
         }
-        System.out.println("종료");
+        System.out.println("close..");
         socket.close();
     }
 
