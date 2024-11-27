@@ -23,12 +23,12 @@ public class ClientHandler implements Runnable {
 
             userName = br.readLine();
             System.out.println(log("** " + userName + " is join **"));
-            broadcastMessage(userName + "님이 입장 하셨습니다.");
+            Server.broadcastMessage("<system>",userName + "님이 입장 하셨습니다.");
             String line;
 
             while ((line = br.readLine()) != null) {
                 System.out.println(log(userName + ":" + line));
-                broadcastMessage(line);
+                Server.broadcastMessage(userName + ":",line);
                 if (line.equals("exit")) {
                     break;
                 }
@@ -37,7 +37,7 @@ public class ClientHandler implements Runnable {
         } finally {
             Server.clientHandlers.remove(this);
             System.out.println(log("** " + userName + " is quit **"));
-            broadcastMessage(userName + "님이 퇴장 하셨습니다.");
+            Server.broadcastMessage("<system>",userName + "님이 퇴장 하셨습니다.");
 
             try {
                 socket.close();
@@ -47,9 +47,5 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    private void broadcastMessage(String line) {
-        for (ClientHandler clientHandler : Server.clientHandlers) {
-            clientHandler.pw.println(userName + ":" + line);
-        }
-    }
+
 }

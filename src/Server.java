@@ -5,6 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static utils.MyUtils.*;
 
@@ -12,13 +14,14 @@ public class Server {
 
     public static Set<ClientHandler> clientHandlers = Collections.synchronizedSet(new HashSet<>());
     public static volatile boolean running = true;
+
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
 
         final int PORT = 8888;
         try {
 
-            serverSocket =  new ServerSocket(PORT, 50, InetAddress.getByName("0.0.0.0"));
+            serverSocket = new ServerSocket(PORT, 50, InetAddress.getByName("0.0.0.0"));
             System.out.println(log("server open..."));
             System.out.println("===================================\n");
         } catch (IOException e) {
@@ -26,8 +29,8 @@ public class Server {
         }
 
 
-        Thread thread = new Thread(new ServerCommandTask(serverSocket));
-        thread.start();
+        ExecutorService es = Executors.newCachedThreadPool();
+        es.execute(new ServerCommandListenTask(serverSocket));
 
         while (running) {
             try {
@@ -35,9 +38,9 @@ public class Server {
                 if (serverSocket != null) {
                     socket = serverSocket.accept();
                 }
-                new Thread(new ClientHandler(socket)).start();
-            }catch (SocketException e){
-                System.out.println(log(e.getMessage()));
+                es.execute(new ClientHandler(socket));
+            } catch (SocketException e) {
+                System.out.println(log("server "+ e.getMessage()));
                 break;
             }
         }
@@ -45,34 +48,51 @@ public class Server {
         if (serverSocket != null) {
             serverSocket.close();
         }
+        es.close();
 
     }
+    static void broadcastMessage(String sender, String line) {
+        for (ClientHandler clientHandler : Server.clientHandlers) {
+            clientHandler.pw.println(sender + " " + line);
+        }
+    }
+
 }
 
-class ServerCommandTask implements Runnable {
+class ServerCommandListenTask implements Runnable {
 
     private BufferedReader br;
     private final ServerSocket serverSocket;
 
-    public ServerCommandTask(ServerSocket serverSocket) {
+    public ServerCommandListenTask(ServerSocket serverSocket) {
         br = new BufferedReader(new InputStreamReader(System.in));
         this.serverSocket = serverSocket;
     }
 
     @Override
     public void run() {
-        // TODO: 2024-10-18 관리자 커맨드 추가해야함
         while (true) {
             try {
-                String command = br.readLine();
+
+                StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+                String command = st.nextToken();
                 if (command.equals("shutdown")) {
                     System.out.println(log("server shutdown"));
                     Server.running = false;
                     serverSocket.close();
                     break;
+                } else if (command.equals("all")){
+                    String text = st.nextToken();
+                    Server.broadcastMessage("<system>", text);
+                    System.out.println(log("server all " + text));
+                }else{
+
+                    // TODO: 2024-11-27 관리자 커맨드 추가
                 }
             } catch (IOException e) {
                 System.out.println(log("command error!!"));
+            } catch (NoSuchElementException e){
+                System.out.println("command input error");
             }
         }
     }

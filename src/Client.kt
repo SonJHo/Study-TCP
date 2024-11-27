@@ -1,5 +1,7 @@
 import java.awt.BorderLayout
 import java.awt.Font
+import java.awt.event.WindowAdapter
+import java.awt.event.WindowEvent
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -7,6 +9,7 @@ import java.io.OutputStreamWriter
 import java.io.PrintWriter
 import java.io.UncheckedIOException
 import java.net.Socket
+import java.util.concurrent.Executors
 import javax.swing.JButton
 import javax.swing.JFrame
 import javax.swing.JLabel
@@ -21,7 +24,7 @@ import javax.swing.JTextField
 
 fun main() {
     val frame = JFrame("Chat frame")
-    frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+    frame.defaultCloseOperation = JFrame.DO_NOTHING_ON_CLOSE
     frame.setSize(600, 600)
 
     val menuBar = JMenuBar()
@@ -58,6 +61,7 @@ fun main() {
     var username: String
 
 
+    val es = Executors.newCachedThreadPool()
     val ta = JTextArea()
     ta.lineWrap = true
     ta.wrapStyleWord = true
@@ -86,8 +90,20 @@ fun main() {
         tf.text = ""
     }
     helpItem.addActionListener {
-        JOptionPane.showMessageDialog(frame, "사용법")
+        JOptionPane.showMessageDialog(frame, "응안알려줘 알아서해")
     }
+
+    frame.addWindowListener(object : WindowAdapter() {
+        override fun windowClosing(e: WindowEvent?) {
+            es.shutdown() // ExecutorService 종료
+            try {
+                socket.close() // 소켓 종료
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            frame.dispose() // 프레임 종료
+        }
+    })
 
 
 
@@ -101,7 +117,7 @@ fun main() {
             username = JOptionPane.showInputDialog("enter your Nickname : ")
             pw!!.println(username)
 
-            Thread(MessageReceiverV2(socket, ta)).start()
+            es.execute(MessageReceiver(socket, ta))
 
 
         } catch (e: UncheckedIOException) {
