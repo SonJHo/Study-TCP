@@ -1,3 +1,4 @@
+package chatprogramV1;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -76,12 +77,13 @@ class ServerCommandListenTask implements Runnable {
 
                 StringTokenizer st = new StringTokenizer(br.readLine(), " ");
                 String command = st.nextToken();
-                if (command.equals("shutdown")) {
+                if (command.equals("shutdown")) { // 강제종료
                     System.out.println(log("server shutdown"));
                     Server.running = false;
                     serverSocket.close();
+                    br.close();
                     break;
-                } else if (command.equals("all")){
+                } else if (command.equals("all")){ //전체 참여자 알림
                     String text = st.nextToken();
                     Server.broadcastMessage("<system>", text);
                     System.out.println(log("server all " + text));

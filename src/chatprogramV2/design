@@ -1,0 +1,18 @@
+
+ServerV2
+    |
+    |
+SessionManager
+    |
+    |    receive() <---------------- send()
+    |----Session --------------------ClientV2(1)
+    |----Session --------------------ClientV2(2)
+    |----Session --------------------ClientV2(3)
+    |----Session --------------------ClientV2(4)
+         broadcast()>>>>>>>>>>>>>>>>>> receive()
+
+  명령어
+  /join|{name}  사용자 이름을 설정
+  /message|{data}  메세지 전송
+  /change|{name}  사용자 이름을 재설정
+  /exit 채팅서버 접속 종료
