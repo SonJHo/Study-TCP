@@ -56,7 +56,7 @@ fun main() {
     panel.add(reset_bt)
     panel.add(quit_bt)
 
-    val address = "192.168.45.69"
+    val address = "localhost"
     var socket = Socket()
     var br_input: BufferedReader
     var pw: PrintWriter? = null
