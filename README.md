@@ -21,6 +21,15 @@
 
 ---
 
+## V1 실행
+클라이언트 gui
+<img width="585" height="589" alt="image" src="https://github.com/user-attachments/assets/67cb91de-9cad-4933-8796-96fbcf3a90c3" />
+
+
+서버 터미널
+<img width="1124" height="508" alt="image" src="https://github.com/user-attachments/assets/9d3ed4c9-a94d-4cf5-8df7-8e4a42075d13" />
+
+
 ### 2️⃣ V2: 구조적 개선과 명령어 프로토콜 도입
 - **콘솔 기반 명령어 체계화**
   - `/join|{username}` : 사용자 등록  
@@ -38,6 +47,15 @@
 - **유지보수성 향상**
   - `CommandOption` Enum을 통해 명령어 확장 용이  
   - 기능 추가 시 간단히 분기만 추가하면 확장 가능  
+
+
+## V2 실행
+클라이언트 gui
+<img width="585" height="589" alt="image" src="https://github.com/user-attachments/assets/67cb91de-9cad-4933-8796-96fbcf3a90c3" />
+
+
+서버 터미널
+<img width="1124" height="508" alt="image" src="https://github.com/user-attachments/assets/9d3ed4c9-a94d-4cf5-8df7-8e4a42075d13" />
 
 **개선 효과**
 - 프로토콜이 체계화되어 클라이언트/서버 모두 직관적으로 동작  
@@ -61,3 +79,4 @@
 ```bash
 javac -d out src/server/*.java
 java -cp out server.ServerMain
+
