@@ -53,12 +53,10 @@
 
 
 ## V2 실행
-클라이언트 gui
-<img width="585" height="589" alt="image" src="https://github.com/user-attachments/assets/67cb91de-9cad-4933-8796-96fbcf3a90c3" />
 
+**클라이언트 서버 터미널 + 외부네트워크 사용자**
+<img width="1811" height="1027" alt="image" src="https://github.com/user-attachments/assets/c211f473-313c-41f7-bc5f-5d3728c1867e" />
 
-서버 터미널
-<img width="1124" height="508" alt="image" src="https://github.com/user-attachments/assets/9d3ed4c9-a94d-4cf5-8df7-8e4a42075d13" />
 
 **개선 효과**
 - 프로토콜이 체계화되어 클라이언트/서버 모두 직관적으로 동작  
@@ -82,6 +80,7 @@
 ```bash
 javac -d out src/server/*.java
 java -cp out server.ServerMain
+
 
 
 
