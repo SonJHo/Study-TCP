@@ -23,12 +23,13 @@
 
 ## V1 실행
 **클라이언트 gui**
+
 <img width="585" height="589" alt="image" src="https://github.com/user-attachments/assets/67cb91de-9cad-4933-8796-96fbcf3a90c3" />
 
 
 **서버 터미널**
-<img width="1124" height="508" alt="image" src="https://github.com/user-attachments/assets/9d3ed4c9-a94d-4cf5-8df7-8e4a42075d13" />
 
+<img width="1124" height="508" alt="image" src="https://github.com/user-attachments/assets/9d3ed4c9-a94d-4cf5-8df7-8e4a42075d13" />
 
 ---
 
@@ -81,5 +82,6 @@
 ```bash
 javac -d out src/server/*.java
 java -cp out server.ServerMain
+
 
 
